@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<link rel="stylesheet" href="%PUBLIC_URL%/bootstrap/css/bootstrap.min.css"/>
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src="%PUBLIC_URL%/bootstrap/js/bootstrap.min.js"></script>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Web site created using create-react-app" />
+		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		<title>React App</title>
+	</head>
+
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+
+	<body class="container-fluid bg-dark text-white">
+		<section class="d-flex justify-content-between pt-3">
+			<div>
+				Algoritmo de ordenamiento:
+				<select>
+					<option>
+						Seleccion
+					</option>
+					<option>
+						Burbuja
+					</option>
+					<option>
+						Insercion
+					</option>
+					<option>
+						Merge
+					</option>
+					<option>
+						Cola de prioridad
+					</option>
+				</select>
+			</div>
+			<div>
+				Elementos:
+				<input type="range" min="10" max="100" value="50">
+			</div>
+			<div>
+				<button class="btn btn-secondary ">
+					Crear arreglo aleatorio
+				</button>
+			</div>
+		</section>
+		<hr class="bg-white">
+		<div id="root"></div>
+		<section class="container-fluid fixed-bottom pb-3">
+			<hr class="bg-white">
+			<div>
+				velocidad:
+				<input type="range" min="1" max="100" value="50">
+			</div>
+			<div>
+			</div>
+		</section>
+	</body>
+
+
+</html>
