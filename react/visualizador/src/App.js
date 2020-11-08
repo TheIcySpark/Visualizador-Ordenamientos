@@ -1,11 +1,10 @@
 import logo from './logo.svg';
+import Visualizador from './Visualizador/Visualizador'
 import './App.css';
 
 function App() {
 	return(
-		<div>
-			PARKOUR
-		</div>
+		<Visualizador></Visualizador>
 	);
 }
 
