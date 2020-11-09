@@ -15,11 +15,17 @@ export default class Visualizador extends React.Component{
         document.getElementById('boton_arreglo_aleatorio').onclick = () =>{
             this.formatearArreglo();
         }
+        document.getElementById('elementos_range').addEventListener("change", (event) =>{
+            this.formatearArreglo();
+            document.getElementById('elementos_text').value = 
+                    document.getElementById('elementos_range').value;
+        })
     }
 
     formatearArreglo(){
         const arreglo = [];
-        for(let i = 1; i <= 50; i++){
+        const tam = document.getElementById('elementos_range').value;
+        for(let i = 1; i <= tam; i++){
             arreglo.push(enteroAleatorio(1,500));
         }
         this.setState({arreglo});

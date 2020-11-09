@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="%PUBLIC_URL%/bootstrap/css/bootstrap.min.css"/>
 		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 		<script src="%PUBLIC_URL%/bootstrap/js/bootstrap.min.js"></script>
+		<script src="%PUBLIC_URL%/scripts/index.js"></script>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +21,7 @@
 		<section class="d-flex container-fluid  justify-content-between pt-3">
 			<div>
 				Algoritmo de ordenamiento:
-				<select>
+				<select class = "bg-dark text-white">
 					<option>
 						Seleccion
 					</option>
@@ -40,7 +41,10 @@
 			</div>
 			<div>
 				Elementos:
-				<input type="range" min="10" max="100" value="50">
+				<input type = "text" value = "50" readonly id = "elementos_text" size = "1"
+				class="bg-dark text-white text-center">
+				<input type="range" min="10" max="250" value="50" 
+				id = "elementos_range">
 			</div>
 			<div>
 				<button class="btn btn-secondary" id = "boton_arreglo_aleatorio">
