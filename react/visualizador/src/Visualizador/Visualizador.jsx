@@ -16,7 +16,7 @@ export default class Visualizador extends React.Component{
 
     formatearArreglo(){
         const arreglo = [];
-        for(let i = 1; i <= 250; i++){
+        for(let i = 1; i <= 50; i++){
             arreglo.push(enteroAleatorio(1,500));
         }
         this.setState({arreglo});
