@@ -16,7 +16,7 @@ export default class Visualizador extends React.Component{
 
     formatearArreglo(){
         const arreglo = [];
-        for(let i = 1; i <= 100; i++){
+        for(let i = 1; i <= 250; i++){
             arreglo.push(enteroAleatorio(1,500));
         }
         this.setState({arreglo});
@@ -25,12 +25,14 @@ export default class Visualizador extends React.Component{
     
     render(){
         const {arreglo} = this.state;
+        const ancho = parseInt((805 / arreglo.length) + 1);
+        console.log(ancho);
         return(
             <>
                 {arreglo.map(function(valor, indice){
                     return (
-                    <div className = "barraArreglo" key = {indice} style = {{height: `${valor}px`}}>
-                        {valor}
+                    <div className = "barraArreglo" key = {indice} 
+                    style = {{height: `${valor}px`, width: `${ancho}%` }}>
                     </div>)
                 })}
             </>
