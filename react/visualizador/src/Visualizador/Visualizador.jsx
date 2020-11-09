@@ -12,6 +12,9 @@ export default class Visualizador extends React.Component{
 
     componentDidMount(){
         this.formatearArreglo()
+        document.getElementById('boton_arreglo_aleatorio').onclick = () =>{
+            this.formatearArreglo();
+        }
     }
 
     formatearArreglo(){
@@ -21,6 +24,7 @@ export default class Visualizador extends React.Component{
         }
         this.setState({arreglo});
     }
+    
     
     
     render(){
