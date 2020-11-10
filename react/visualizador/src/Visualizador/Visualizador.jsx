@@ -4,10 +4,20 @@ import "./Visualizador.css";
 export default class Visualizador extends React.Component{
     constructor(props){
         super(props);
-
+        
         this.state = {
-            arreglo: []
+            arreglo: [],
         };
+    }
+
+    pruebas_animacion(){
+        console.log("pruebas de animacion");
+        const barras = document.getElementsByClassName("barraArreglo")
+        barras[1].style.backgroundColor = "blue";
+    }
+
+    ordenamiento_burbuja(){
+        this.pruebas_animacion();
     }
 
     componentDidMount(){
@@ -15,10 +25,20 @@ export default class Visualizador extends React.Component{
         document.getElementById('boton_arreglo_aleatorio').onclick = () =>{
             this.formatearArreglo();
         }
-        document.getElementById('elementos_range').addEventListener("change", (event) =>{
+        document.getElementById('elementos_range').addEventListener("change", () =>{
             this.formatearArreglo();
             document.getElementById('elementos_text').value = 
                     document.getElementById('elementos_range').value;
+        })
+        document.getElementById('iniciar_ordenamiento').addEventListener("click", () =>{
+            const algoritmo = document.getElementById('algoritmo_ordenamiento').value;
+            switch(algoritmo){
+                case 'burbuja':
+                    this.ordenamiento_burbuja();
+                    break;
+                default:
+                    break;
+            }
         })
     }
 
@@ -34,14 +54,13 @@ export default class Visualizador extends React.Component{
     
     
     render(){
-        const {arreglo} = this.state;
+        const {arreglo, referencias} = this.state;
         const ancho = parseInt((805 / arreglo.length) + 1);
-        console.log(ancho);
         return(
             <>
                 {arreglo.map(function(valor, indice){
                     return (
-                    <div className = "barraArreglo" key = {indice} 
+                    <div className = "barraArreglo" key = {indice}
                     style = {{height: `${valor}px`, width: `${ancho}%` }}>
                     </div>)
                 })}

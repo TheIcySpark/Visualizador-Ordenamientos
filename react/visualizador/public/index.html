@@ -21,20 +21,20 @@
 		<section class="d-flex container-fluid  justify-content-between pt-3">
 			<div>
 				Algoritmo de ordenamiento:
-				<select class = "bg-dark text-white">
-					<option>
-						Seleccion
-					</option>
-					<option>
+				<select class = "bg-dark text-white" id = "algoritmo_ordenamiento">
+					<option value = "burbuja">
 						Burbuja
 					</option>
-					<option>
+					<option value = "Seleccion">
+						Seleccion
+					</option>
+					<option value = "Incersion">
 						Insercion
 					</option>
-					<option>
+					<option value = "merge">
 						Merge
 					</option>
-					<option>
+					<option value = "Cola_prioridad">
 						Cola de prioridad
 					</option>
 				</select>
@@ -65,7 +65,7 @@
 					<input type="range" min="1" max="100" value="50">
 				</div>
 				<div>
-					<button class="bg-dark text-white" id="iniciar_ordenamiento">
+					<button class="bg-success text-white" id="iniciar_ordenamiento">
 						Iniciar ordenamiento
 					</button>
 				</div>
