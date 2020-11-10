@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Visualizador.css";
+import {burbuja} from '../Algoritmos/burbuja.js'
 
 export default class Visualizador extends React.Component{
     constructor(props){
@@ -11,9 +12,23 @@ export default class Visualizador extends React.Component{
     }
 
     pruebas_animacion(){
-        console.log("pruebas de animacion");
+        const animaciones = burbuja(this.state.arreglo);
         const barras = document.getElementsByClassName("barraArreglo")
-        barras[1].style.backgroundColor = "blue";
+        for(let i = 0; i < animaciones.length ; i++){
+            setTimeout(() =>{
+                barras[animaciones[i].b].style.backgroundColor = "blue";
+                barras[animaciones[i].a].style.backgroundColor = "blue";
+                setTimeout(() =>{
+                    //barras[animaciones[i].b].style.backgroundColor = "red";
+                    //barras[animaciones[i].a].style.backgroundColor = "red";
+                    if(animaciones[i].intercambiar){
+                        [barras[animaciones[i].b].style.height, barras[animaciones[i].a].style.height] = 
+                                [barras[animaciones[i].a].style.height, 
+                                barras[animaciones[i].b].style.height]
+                    }
+                }, i *250)
+            }, i * 500)
+        }
     }
 
     ordenamiento_burbuja(){
@@ -25,7 +40,7 @@ export default class Visualizador extends React.Component{
         document.getElementById('boton_arreglo_aleatorio').onclick = () =>{
             this.formatearArreglo();
         }
-        document.getElementById('elementos_range').addEventListener("change", () =>{
+        document.getElementById('elementos_range').addEventListener("input", () =>{
             this.formatearArreglo();
             document.getElementById('elementos_text').value = 
                     document.getElementById('elementos_range').value;
@@ -54,7 +69,7 @@ export default class Visualizador extends React.Component{
     
     
     render(){
-        const {arreglo, referencias} = this.state;
+        const {arreglo} = this.state;
         const ancho = parseInt((805 / arreglo.length) + 1);
         return(
             <>
