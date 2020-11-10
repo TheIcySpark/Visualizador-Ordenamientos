@@ -41,9 +41,9 @@
 			</div>
 			<div>
 				Elementos:
-				<input type = "text" value = "50" readonly id = "elementos_text" size = "1"
+				<input type = "text" value = "125" readonly id = "elementos_text" size = "1"
 				class="bg-dark text-white text-center">
-				<input type="range" min="10" max="250" value="50" 
+				<input type="range" min="10" max="250" value="125" 
 				id = "elementos_range">
 			</div>
 			<div>
@@ -62,11 +62,16 @@
 			<section class="d-flex container-fluid justify-content-between">
 				<div>
 					velocidad:
-					<input type="range" min="1" max="100" value="50">
+					<input type="range" min="1" max="1000" value="500" disabled id = "velocidad_ordenamiento">
 				</div>
 				<div>
-					<button class="bg-success text-white" id="iniciar_ordenamiento">
+					<button class="btn bg-info text-white" id = "iniciar_ordenamiento">
 						Iniciar ordenamiento
+					</button>
+				</div>
+				<div>
+					<button class= "btn bg-danger disabled text-white" disabled>
+						Detener ordenamiento
 					</button>
 				</div>
 			</section>

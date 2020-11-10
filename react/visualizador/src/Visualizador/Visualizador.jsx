@@ -11,6 +11,17 @@ export default class Visualizador extends React.Component{
         };
     }
 
+
+    ordenamiento_finalizado(){
+        const barras = document.getElementsByClassName("barraArreglo");
+        for(let i = 0; i < barras.length; i++){
+            setTimeout(() =>{
+                barras[i].style.backgroundColor = "green";
+            }, i * document.getElementById("velocidad_ordenamiento").value)
+        }
+        console.log(barras);
+    }
+
     pruebas_animacion(){
         const animaciones = burbuja(this.state.arreglo);
         const barras = document.getElementsByClassName("barraArreglo")
@@ -19,15 +30,18 @@ export default class Visualizador extends React.Component{
                 barras[animaciones[i].b].style.backgroundColor = "blue";
                 barras[animaciones[i].a].style.backgroundColor = "blue";
                 setTimeout(() =>{
-                    //barras[animaciones[i].b].style.backgroundColor = "red";
-                    //barras[animaciones[i].a].style.backgroundColor = "red";
+                    barras[animaciones[i].b].style.backgroundColor = "red";
+                    barras[animaciones[i].a].style.backgroundColor = "red";
                     if(animaciones[i].intercambiar){
                         [barras[animaciones[i].b].style.height, barras[animaciones[i].a].style.height] = 
                                 [barras[animaciones[i].a].style.height, 
                                 barras[animaciones[i].b].style.height]
                     }
-                }, i *250)
-            }, i * 500)
+                    if(i == animaciones.length - 1){
+                        this.ordenamiento_finalizado();
+                    }
+                }, document.getElementById("velocidad_ordenamiento").value / 2)
+            }, i * document.getElementById("velocidad_ordenamiento").value)
         }
     }
 
@@ -45,7 +59,10 @@ export default class Visualizador extends React.Component{
             document.getElementById('elementos_text').value = 
                     document.getElementById('elementos_range').value;
         })
-        document.getElementById('iniciar_ordenamiento').addEventListener("click", () =>{
+        const iniciar_ordenamiento = document.getElementById('iniciar_ordenamiento');
+        iniciar_ordenamiento.addEventListener("click", () =>{
+            iniciar_ordenamiento.disabled = true;
+            iniciar_ordenamiento.classList.add("disabled");
             const algoritmo = document.getElementById('algoritmo_ordenamiento').value;
             switch(algoritmo){
                 case 'burbuja':
