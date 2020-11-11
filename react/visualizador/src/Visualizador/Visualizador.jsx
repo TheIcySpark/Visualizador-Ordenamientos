@@ -8,7 +8,7 @@ export default class Visualizador extends React.Component{
         
         this.state = {
             arreglo: [],
-            timers: []
+            timers: [],
         };
     }
 
@@ -30,6 +30,9 @@ export default class Visualizador extends React.Component{
 
     mostrar_animaciones(animaciones, color_comparacion, color_sin_comparacion, color_final){
         const barras = document.getElementsByClassName("barraArreglo")
+        let velocidad_ordenamiento = document.getElementById("velocidad_ordenamiento").value;
+        let maxima_velocidad_ordenamiento = document.getElementById("velocidad_ordenamiento").max;
+        velocidad_ordenamiento = Math.abs(velocidad_ordenamiento - maxima_velocidad_ordenamiento) + 1;
         for(let i = 0; i < animaciones.length ; i++){
             this.state.timers.push(setTimeout(() =>{
                 barras[animaciones[i].b].style.backgroundColor = color_comparacion;
@@ -49,12 +52,13 @@ export default class Visualizador extends React.Component{
                     if(i == animaciones.length - 1){
                         this.ordenamiento_finalizado(color_final);
                     }
-                }, document.getElementById("velocidad_ordenamiento").value / 2);
-            }, i * document.getElementById("velocidad_ordenamiento").value));
+                }, velocidad_ordenamiento / 2);
+            }, i * velocidad_ordenamiento));
         }
     }
 
     agregar_Event_listeners(){
+        let velocidad_ordenamiento = document.getElementById("velocidad_ordenamiento");
         let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
         let rango_elementos = document.getElementById('rango_elementos');
         let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
@@ -63,36 +67,71 @@ export default class Visualizador extends React.Component{
         boton_arreglo_aleatorio.onclick = () =>{
             this.formatearArreglo();
         }
+        velocidad_ordenamiento.addEventListener("change", () =>{
+                let reiniciar = this.state.timers.length > 0;
+                this.detener_ordenamiento();
+                if(reiniciar){
+                    let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
+                    let rango_elementos = document.getElementById('rango_elementos');
+                    let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
+                    let boton_iniciar_ordenamiento = document.getElementById("boton_iniciar_ordenamiento");
+
+                    boton_detener_ordenamiento.disabled = false;
+                    boton_arreglo_aleatorio.disabled = true;
+                    rango_elementos.disabled = true;
+                    boton_iniciar_ordenamiento.disabled = true;
+                    
+                    setTimeout(() =>{
+                        this.iniciar_ordenamiento();
+                    }, 1100)
+                }
+        })
         rango_elementos.addEventListener("input", () =>{
             this.formatearArreglo();
             texto_elementos.value = 
                     rango_elementos.value;
         });
         boton_detener_ordenamiento.addEventListener("click", () =>{
-            for(let i = 0; i < this.state.timers.length; i++){
-                clearTimeout(this.state.timers[i]);
-            }
-            this.state.timers = [];
-            boton_detener_ordenamiento.disabled = true;
-            boton_arreglo_aleatorio.disabled = false;
-            rango_elementos.disabled = false;
-            boton_iniciar_ordenamiento.disabled = false;
+            this.detener_ordenamiento();
         });
+
         boton_iniciar_ordenamiento.addEventListener("click", () =>{
-            boton_detener_ordenamiento.disabled = false;
-            boton_arreglo_aleatorio.disabled = true;
-            rango_elementos.disabled = true;
-            boton_iniciar_ordenamiento.disabled = true;
-            
-            const algoritmo = document.getElementById('seleccion_algoritmo_ordenamiento').value;
-            switch(algoritmo){
-                case 'burbuja':
-                    this.mostrar_animaciones(burbuja(this.state.arreglo), "blue", "red", "green");
-                    break;
-                default:
-                    break;
-            }
+            this.iniciar_ordenamiento();
         })
+    }
+
+    iniciar_ordenamiento(){
+        let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
+        let rango_elementos = document.getElementById('rango_elementos');
+        let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
+        let boton_iniciar_ordenamiento = document.getElementById("boton_iniciar_ordenamiento");
+
+        boton_detener_ordenamiento.disabled = false;
+        boton_arreglo_aleatorio.disabled = true;
+        rango_elementos.disabled = true;
+        boton_iniciar_ordenamiento.disabled = true;
+        
+        const algoritmo = document.getElementById('seleccion_algoritmo_ordenamiento').value;
+        switch(algoritmo){
+            case 'burbuja':
+                this.mostrar_animaciones(burbuja(this.state.arreglo), "blue", "red", "green");
+                break;
+        }
+    }
+
+    detener_ordenamiento(){
+        let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
+        let rango_elementos = document.getElementById('rango_elementos');
+        let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
+        let boton_iniciar_ordenamiento = document.getElementById("boton_iniciar_ordenamiento");
+        for(let i = 0; i < this.state.timers.length; i++){
+            clearTimeout(this.state.timers[i]);
+        }
+        this.state.timers = [];
+        boton_detener_ordenamiento.disabled = true;
+        boton_arreglo_aleatorio.disabled = false;
+        rango_elementos.disabled = false;
+        boton_iniciar_ordenamiento.disabled = false;
     }
 
     componentDidMount(){
