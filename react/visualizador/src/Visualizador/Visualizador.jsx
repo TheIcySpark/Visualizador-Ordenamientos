@@ -76,14 +76,14 @@ export default class Visualizador extends React.Component{
                     let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
                     let boton_iniciar_ordenamiento = document.getElementById("boton_iniciar_ordenamiento");
 
-                    boton_detener_ordenamiento.disabled = false;
+                    boton_detener_ordenamiento.disabled = true;
                     boton_arreglo_aleatorio.disabled = true;
                     rango_elementos.disabled = true;
                     boton_iniciar_ordenamiento.disabled = true;
                     
-                    setTimeout(() =>{
+                    this.state.timers.push(setTimeout(() =>{
                         this.iniciar_ordenamiento();
-                    }, 1100)
+                    }, 1100))
                 }
         })
         rango_elementos.addEventListener("input", () =>{
