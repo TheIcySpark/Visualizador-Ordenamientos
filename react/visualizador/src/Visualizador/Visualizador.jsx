@@ -15,13 +15,14 @@ export default class Visualizador extends React.Component{
     ordenamiento_finalizado(color_final){
         const barras = document.getElementsByClassName("barraArreglo");
         for(let i = 0; i < barras.length; i++){
-            this.timers.push(setTimeout(() =>{
+            this.state.timers.push(setTimeout(() =>{
                 barras[i].style.backgroundColor = color_final;
                 if(i == barras.length - 1){
                     document.getElementById("boton_detener_ordenamiento").disabled = true;
                     document.getElementById("boton_arreglo_aleatorio").disabled = false;
                     document.getElementById("rango_elementos").disabled = false;
                     document.getElementById('boton_iniciar_ordenamiento').disabled = false;
+                    this.state.timers = [];
                 }
             }, i * 10))
         }
@@ -29,18 +30,21 @@ export default class Visualizador extends React.Component{
 
     mostrar_animaciones(animaciones, color_comparacion, color_sin_comparacion, color_final){
         const barras = document.getElementsByClassName("barraArreglo")
-        this.timers = []
         for(let i = 0; i < animaciones.length ; i++){
-            this.timers.push(setTimeout(() =>{
+            this.state.timers.push(setTimeout(() =>{
                 barras[animaciones[i].b].style.backgroundColor = color_comparacion;
                 barras[animaciones[i].a].style.backgroundColor = color_comparacion;
                 setTimeout(() =>{
                     barras[animaciones[i].b].style.backgroundColor = color_sin_comparacion;
                     barras[animaciones[i].a].style.backgroundColor = color_sin_comparacion;
                     if(animaciones[i].intercambiar){
-                        [barras[animaciones[i].b].style.height, barras[animaciones[i].a].style.height] = 
-                                [barras[animaciones[i].a].style.height, 
-                                barras[animaciones[i].b].style.height]
+                        [barras[animaciones[i].a].style.height , barras[animaciones[i].b].style.height] =
+                                [barras[animaciones[i].b].style.height ,
+                                barras[animaciones[i].a].style.height]
+
+                        let aux = this.state.arreglo[animaciones[i].b];
+                        this.state.arreglo[animaciones[i].b] = this.state.arreglo[animaciones[i].a];
+                        this.state.arreglo[animaciones[i].a] = aux
                     }
                     if(i == animaciones.length - 1){
                         this.ordenamiento_finalizado(color_final);
@@ -65,10 +69,10 @@ export default class Visualizador extends React.Component{
                     rango_elementos.value;
         });
         boton_detener_ordenamiento.addEventListener("click", () =>{
-            for(let i = 0; i < this.timers.length; i++){
-                clearTimeout(this.timers[i]);
+            for(let i = 0; i < this.state.timers.length; i++){
+                clearTimeout(this.state.timers[i]);
             }
-            this.timers = [];
+            this.state.timers = [];
             boton_detener_ordenamiento.disabled = true;
             boton_arreglo_aleatorio.disabled = false;
             rango_elementos.disabled = false;
@@ -98,6 +102,7 @@ export default class Visualizador extends React.Component{
 
     formatearArreglo(){
         const arreglo = [];
+        this.setState({arreglo});
         const tam = document.getElementById('rango_elementos').value;
         for(let i = 1; i <= tam; i++){
             arreglo.push(enteroAleatorio(1,500));
