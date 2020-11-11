@@ -8,6 +8,7 @@ export default class Visualizador extends React.Component{
         
         this.state = {
             arreglo: [],
+            timers: []
         };
     }
 
@@ -15,18 +16,25 @@ export default class Visualizador extends React.Component{
     ordenamiento_finalizado(){
         const barras = document.getElementsByClassName("barraArreglo");
         for(let i = 0; i < barras.length; i++){
-            setTimeout(() =>{
+            this.timers.push(setTimeout(() =>{
                 barras[i].style.backgroundColor = "green";
-            }, i * document.getElementById("velocidad_ordenamiento").value)
+                if(i == barras.length - 1){
+                    document.getElementById("velocidad_ordenamiento").disabled = false;
+                    document.getElementById("detener_ordenamiento").disabled = true;
+                    document.getElementById("boton_arreglo_aleatorio").disabled = false;
+                    document.getElementById("elementos_range").disabled = false;
+                    document.getElementById('iniciar_ordenamiento').disabled = false;
+                }
+            }, i * document.getElementById("velocidad_ordenamiento").value))
         }
-        console.log(barras);
     }
 
-    pruebas_animacion(){
+    ordenamiento_burbuja(){
         const animaciones = burbuja(this.state.arreglo);
         const barras = document.getElementsByClassName("barraArreglo")
+        this.timers = []
         for(let i = 0; i < animaciones.length ; i++){
-            setTimeout(() =>{
+            this.timers.push(setTimeout(() =>{
                 barras[animaciones[i].b].style.backgroundColor = "blue";
                 barras[animaciones[i].a].style.backgroundColor = "blue";
                 setTimeout(() =>{
@@ -40,13 +48,9 @@ export default class Visualizador extends React.Component{
                     if(i == animaciones.length - 1){
                         this.ordenamiento_finalizado();
                     }
-                }, document.getElementById("velocidad_ordenamiento").value / 2)
-            }, i * document.getElementById("velocidad_ordenamiento").value)
+                }, document.getElementById("velocidad_ordenamiento").value / 2);
+            }, i * document.getElementById("velocidad_ordenamiento").value));
         }
-    }
-
-    ordenamiento_burbuja(){
-        this.pruebas_animacion();
     }
 
     componentDidMount(){
@@ -58,11 +62,26 @@ export default class Visualizador extends React.Component{
             this.formatearArreglo();
             document.getElementById('elementos_text').value = 
                     document.getElementById('elementos_range').value;
-        })
-        const iniciar_ordenamiento = document.getElementById('iniciar_ordenamiento');
+        });
+        document.getElementById("detener_ordenamiento").addEventListener("click", () =>{
+            for(let i = 0; i < this.timers.length; i++){
+                clearTimeout(this.timers[i]);
+            }
+            this.timers = [];
+            document.getElementById("velocidad_ordenamiento").disabled = false;
+            document.getElementById("detener_ordenamiento").disabled = true;
+            document.getElementById("boton_arreglo_aleatorio").disabled = false;
+            document.getElementById("elementos_range").disabled = false;
+            document.getElementById('iniciar_ordenamiento').disabled = false;
+        });
+        let iniciar_ordenamiento = document.getElementById('iniciar_ordenamiento');
         iniciar_ordenamiento.addEventListener("click", () =>{
+            document.getElementById("velocidad_ordenamiento").disabled = true;
+            document.getElementById("detener_ordenamiento").disabled = false;
+            document.getElementById("boton_arreglo_aleatorio").disabled = true;
+            document.getElementById("elementos_range").disabled = true;
             iniciar_ordenamiento.disabled = true;
-            iniciar_ordenamiento.classList.add("disabled");
+            
             const algoritmo = document.getElementById('algoritmo_ordenamiento').value;
             switch(algoritmo){
                 case 'burbuja':
