@@ -21,33 +21,21 @@
 		<section class="d-flex container-fluid  justify-content-between pt-3">
 			<div>
 				Algoritmo de ordenamiento:
-				<select class = "bg-dark text-white" id = "algoritmo_ordenamiento">
+				<select class = "bg-dark text-white" id = "seleccion_algoritmo_ordenamiento">
 					<option value = "burbuja">
 						Burbuja
-					</option>
-					<option value = "Seleccion">
-						Seleccion
-					</option>
-					<option value = "Incersion">
-						Insercion
-					</option>
-					<option value = "merge">
-						Merge
-					</option>
-					<option value = "Cola_prioridad">
-						Cola de prioridad
 					</option>
 				</select>
 			</div>
 			<div>
 				Elementos:
-				<input type = "text" value = "125" readonly id = "elementos_text" size = "1"
+				<input type = "text" value = "125" readonly id = "texto_elementos" size = "1"
 				class="bg-dark text-white text-center">
 				<input type="range" min="10" max="250" value="125" 
-				id = "elementos_range">
+				id = "rango_elementos">
 			</div>
 			<div>
-				<button class="btn btn-secondary" id = "boton_arreglo_aleatorio">
+				<button class="btn btn-info" id = "boton_arreglo_aleatorio">
 					Generar Arreglo aleatorio
 				</button>
 			</div>
@@ -65,12 +53,12 @@
 					<input type="range" min="1" max="1000" value="500" id = "velocidad_ordenamiento">
 				</div>
 				<div>
-					<button class="btn bg-info text-white" id = "iniciar_ordenamiento">
+					<button class="btn btn-info text-white" id = "boton_iniciar_ordenamiento">
 						Iniciar ordenamiento
 					</button>
 				</div>
 				<div>
-					<button class= "btn bg-danger text-white" disabled id = "detener_ordenamiento">
+					<button class= "btn btn-danger text-white" disabled id = "boton_detener_ordenamiento">
 						Detener ordenamiento
 					</button>
 				</div>

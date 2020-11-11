@@ -12,80 +12,78 @@ export default class Visualizador extends React.Component{
         };
     }
 
-
-    ordenamiento_finalizado(){
+    ordenamiento_finalizado(color_final){
         const barras = document.getElementsByClassName("barraArreglo");
         for(let i = 0; i < barras.length; i++){
             this.timers.push(setTimeout(() =>{
-                barras[i].style.backgroundColor = "green";
+                barras[i].style.backgroundColor = color_final;
                 if(i == barras.length - 1){
-                    document.getElementById("velocidad_ordenamiento").disabled = false;
-                    document.getElementById("detener_ordenamiento").disabled = true;
+                    document.getElementById("boton_detener_ordenamiento").disabled = true;
                     document.getElementById("boton_arreglo_aleatorio").disabled = false;
-                    document.getElementById("elementos_range").disabled = false;
-                    document.getElementById('iniciar_ordenamiento').disabled = false;
+                    document.getElementById("rango_elementos").disabled = false;
+                    document.getElementById('boton_iniciar_ordenamiento').disabled = false;
                 }
-            }, i * document.getElementById("velocidad_ordenamiento").value))
+            }, i * 10))
         }
     }
 
-    ordenamiento_burbuja(){
-        const animaciones = burbuja(this.state.arreglo);
+    mostrar_animaciones(animaciones, color_comparacion, color_sin_comparacion, color_final){
         const barras = document.getElementsByClassName("barraArreglo")
         this.timers = []
         for(let i = 0; i < animaciones.length ; i++){
             this.timers.push(setTimeout(() =>{
-                barras[animaciones[i].b].style.backgroundColor = "blue";
-                barras[animaciones[i].a].style.backgroundColor = "blue";
+                barras[animaciones[i].b].style.backgroundColor = color_comparacion;
+                barras[animaciones[i].a].style.backgroundColor = color_comparacion;
                 setTimeout(() =>{
-                    barras[animaciones[i].b].style.backgroundColor = "red";
-                    barras[animaciones[i].a].style.backgroundColor = "red";
+                    barras[animaciones[i].b].style.backgroundColor = color_sin_comparacion;
+                    barras[animaciones[i].a].style.backgroundColor = color_sin_comparacion;
                     if(animaciones[i].intercambiar){
                         [barras[animaciones[i].b].style.height, barras[animaciones[i].a].style.height] = 
                                 [barras[animaciones[i].a].style.height, 
                                 barras[animaciones[i].b].style.height]
                     }
                     if(i == animaciones.length - 1){
-                        this.ordenamiento_finalizado();
+                        this.ordenamiento_finalizado(color_final);
                     }
                 }, document.getElementById("velocidad_ordenamiento").value / 2);
             }, i * document.getElementById("velocidad_ordenamiento").value));
         }
     }
 
-    componentDidMount(){
-        this.formatearArreglo()
-        document.getElementById('boton_arreglo_aleatorio').onclick = () =>{
+    agregar_Event_listeners(){
+        let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
+        let rango_elementos = document.getElementById('rango_elementos');
+        let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
+        let texto_elementos = document.getElementById('texto_elementos');
+        let boton_iniciar_ordenamiento = document.getElementById("boton_iniciar_ordenamiento");
+        boton_arreglo_aleatorio.onclick = () =>{
             this.formatearArreglo();
         }
-        document.getElementById('elementos_range').addEventListener("input", () =>{
+        rango_elementos.addEventListener("input", () =>{
             this.formatearArreglo();
-            document.getElementById('elementos_text').value = 
-                    document.getElementById('elementos_range').value;
+            texto_elementos.value = 
+                    rango_elementos.value;
         });
-        document.getElementById("detener_ordenamiento").addEventListener("click", () =>{
+        boton_detener_ordenamiento.addEventListener("click", () =>{
             for(let i = 0; i < this.timers.length; i++){
                 clearTimeout(this.timers[i]);
             }
             this.timers = [];
-            document.getElementById("velocidad_ordenamiento").disabled = false;
-            document.getElementById("detener_ordenamiento").disabled = true;
-            document.getElementById("boton_arreglo_aleatorio").disabled = false;
-            document.getElementById("elementos_range").disabled = false;
-            document.getElementById('iniciar_ordenamiento').disabled = false;
+            boton_detener_ordenamiento.disabled = true;
+            boton_arreglo_aleatorio.disabled = false;
+            rango_elementos.disabled = false;
+            boton_iniciar_ordenamiento.disabled = false;
         });
-        let iniciar_ordenamiento = document.getElementById('iniciar_ordenamiento');
-        iniciar_ordenamiento.addEventListener("click", () =>{
-            document.getElementById("velocidad_ordenamiento").disabled = true;
-            document.getElementById("detener_ordenamiento").disabled = false;
-            document.getElementById("boton_arreglo_aleatorio").disabled = true;
-            document.getElementById("elementos_range").disabled = true;
-            iniciar_ordenamiento.disabled = true;
+        boton_iniciar_ordenamiento.addEventListener("click", () =>{
+            boton_detener_ordenamiento.disabled = false;
+            boton_arreglo_aleatorio.disabled = true;
+            rango_elementos.disabled = true;
+            boton_iniciar_ordenamiento.disabled = true;
             
-            const algoritmo = document.getElementById('algoritmo_ordenamiento').value;
+            const algoritmo = document.getElementById('seleccion_algoritmo_ordenamiento').value;
             switch(algoritmo){
                 case 'burbuja':
-                    this.ordenamiento_burbuja();
+                    this.mostrar_animaciones(burbuja(this.state.arreglo), "blue", "red", "green");
                     break;
                 default:
                     break;
@@ -93,9 +91,14 @@ export default class Visualizador extends React.Component{
         })
     }
 
+    componentDidMount(){
+        this.formatearArreglo()
+        this.agregar_Event_listeners();
+    }
+
     formatearArreglo(){
         const arreglo = [];
-        const tam = document.getElementById('elementos_range').value;
+        const tam = document.getElementById('rango_elementos').value;
         for(let i = 1; i <= tam; i++){
             arreglo.push(enteroAleatorio(1,500));
         }
