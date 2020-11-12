@@ -16,7 +16,7 @@ export default class Visualizador extends React.Component{
         const barras = document.getElementsByClassName("barraArreglo");
         for(let i = 0; i < barras.length; i++){
             this.state.timers.push(setTimeout(() =>{
-                barras[i].style.backgroundColor = color_final;
+                barras[i].style.backgroundColor = '#2E8B57';
                 if(i == barras.length - 1){
                     document.getElementById("boton_detener_ordenamiento").disabled = true;
                     document.getElementById("boton_arreglo_aleatorio").disabled = false;
@@ -35,11 +35,11 @@ export default class Visualizador extends React.Component{
         velocidad_ordenamiento = Math.abs(velocidad_ordenamiento - maxima_velocidad_ordenamiento) + 1;
         for(let i = 0; i < animaciones.length ; i++){
             this.state.timers.push(setTimeout(() =>{
-                barras[animaciones[i].b].style.backgroundColor = color_comparacion;
-                barras[animaciones[i].a].style.backgroundColor = color_comparacion;
+                barras[animaciones[i].b].style.backgroundColor = '#80ced6';
+                barras[animaciones[i].a].style.backgroundColor = '#80ced6';
                 setTimeout(() =>{
-                    barras[animaciones[i].b].style.backgroundColor = color_sin_comparacion;
-                    barras[animaciones[i].a].style.backgroundColor = color_sin_comparacion;
+                    barras[animaciones[i].b].style.backgroundColor = '#c83349';
+                    barras[animaciones[i].a].style.backgroundColor = '#c83349';
                     if(animaciones[i].intercambiar){
                         [barras[animaciones[i].a].style.height , barras[animaciones[i].b].style.height] =
                                 [barras[animaciones[i].b].style.height ,
