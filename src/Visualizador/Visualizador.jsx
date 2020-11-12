@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Visualizador.css";
 import {burbuja} from '../Algoritmos/burbuja.js'
+import {seleccion} from '../Algoritmos/seleccion.js'
 
 export default class Visualizador extends React.Component{
     constructor(props){
@@ -35,22 +36,19 @@ export default class Visualizador extends React.Component{
         velocidad_ordenamiento = Math.abs(velocidad_ordenamiento - maxima_velocidad_ordenamiento) + 1;
         for(let i = 0; i < animaciones.length ; i++){
             this.state.timers.push(setTimeout(() =>{
-                barras[animaciones[i].b].style.backgroundColor = '#80ced6';
-                barras[animaciones[i].a].style.backgroundColor = '#80ced6';
+                barras[animaciones[i].p1].style.backgroundColor = '#80ced6';
+                barras[animaciones[i].p2].style.backgroundColor = '#80ced6';
                 setTimeout(() =>{
-                    barras[animaciones[i].b].style.backgroundColor = '#c83349';
-                    barras[animaciones[i].a].style.backgroundColor = '#c83349';
-                    if(animaciones[i].intercambiar){
-                        [barras[animaciones[i].a].style.height , barras[animaciones[i].b].style.height] =
-                                [barras[animaciones[i].b].style.height ,
-                                barras[animaciones[i].a].style.height]
+                    barras[animaciones[i].p1].style.backgroundColor = '#c83349';
+                    barras[animaciones[i].p2].style.backgroundColor = '#c83349';
+                    barras[animaciones[i].p1].style.height = `${animaciones[i].vp1}px`
+                    barras[animaciones[i].p2].style.height = `${animaciones[i].vp2}px`
 
-                        let aux = this.state.arreglo[animaciones[i].b];
-                        this.state.arreglo[animaciones[i].b] = this.state.arreglo[animaciones[i].a];
-                        this.state.arreglo[animaciones[i].a] = aux
-                    }
+                    this.state.arreglo[animaciones[i].p1] = animaciones[i].vp1;
+                    this.state.arreglo[animaciones[i].p2] = animaciones[i].vp2;
                     if(i == animaciones.length - 1){
-                        this.ordenamiento_finalizado(color_final);
+                        console.log(this.state.arreglo)
+                        this.ordenamiento_finalizado();
                     }
                 }, velocidad_ordenamiento / 2);
             }, i * velocidad_ordenamiento));
@@ -58,6 +56,7 @@ export default class Visualizador extends React.Component{
     }
 
     agregar_Event_listeners(){
+        let seleccion_algoritmo_ordenamiento = document.getElementById('seleccion_algoritmo_ordenamiento');
         let velocidad_ordenamiento = document.getElementById("velocidad_ordenamiento");
         let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
         let rango_elementos = document.getElementById('rango_elementos');
@@ -80,6 +79,7 @@ export default class Visualizador extends React.Component{
                     boton_arreglo_aleatorio.disabled = true;
                     rango_elementos.disabled = true;
                     boton_iniciar_ordenamiento.disabled = true;
+                    seleccion_algoritmo_ordenamiento.disabled = true;
                     
                     this.state.timers.push(setTimeout(() =>{
                         this.iniciar_ordenamiento();
@@ -101,6 +101,7 @@ export default class Visualizador extends React.Component{
     }
 
     iniciar_ordenamiento(){
+        let seleccion_algoritmo_ordenamiento = document.getElementById('seleccion_algoritmo_ordenamiento');
         let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
         let rango_elementos = document.getElementById('rango_elementos');
         let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
@@ -110,16 +111,20 @@ export default class Visualizador extends React.Component{
         boton_arreglo_aleatorio.disabled = true;
         rango_elementos.disabled = true;
         boton_iniciar_ordenamiento.disabled = true;
+        seleccion_algoritmo_ordenamiento.disabled = true;
         
-        const algoritmo = document.getElementById('seleccion_algoritmo_ordenamiento').value;
-        switch(algoritmo){
+        switch(seleccion_algoritmo_ordenamiento.value){
             case 'burbuja':
                 this.mostrar_animaciones(burbuja(this.state.arreglo));
                 break;
+            case 'seleccion':
+                this.mostrar_animaciones(seleccion(this.state.arreglo));
+                break
         }
     }
 
     detener_ordenamiento(){
+        let seleccion_algoritmo_ordenamiento = document.getElementById('seleccion_algoritmo_ordenamiento');
         let boton_arreglo_aleatorio = document.getElementById('boton_arreglo_aleatorio');
         let rango_elementos = document.getElementById('rango_elementos');
         let boton_detener_ordenamiento = document.getElementById('boton_detener_ordenamiento');
@@ -132,6 +137,7 @@ export default class Visualizador extends React.Component{
         boton_arreglo_aleatorio.disabled = false;
         rango_elementos.disabled = false;
         boton_iniciar_ordenamiento.disabled = false;
+        seleccion_algoritmo_ordenamiento.disabled = false;
     }
 
     componentDidMount(){
