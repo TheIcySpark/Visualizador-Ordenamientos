@@ -12,7 +12,7 @@ export default class Visualizador extends React.Component{
         };
     }
 
-    ordenamiento_finalizado(color_final){
+    ordenamiento_finalizado(){
         const barras = document.getElementsByClassName("barraArreglo");
         for(let i = 0; i < barras.length; i++){
             this.state.timers.push(setTimeout(() =>{
@@ -28,7 +28,7 @@ export default class Visualizador extends React.Component{
         }
     }
 
-    mostrar_animaciones(animaciones, color_comparacion, color_sin_comparacion, color_final){
+    mostrar_animaciones(animaciones){
         const barras = document.getElementsByClassName("barraArreglo")
         let velocidad_ordenamiento = document.getElementById("velocidad_ordenamiento").value;
         let maxima_velocidad_ordenamiento = document.getElementById("velocidad_ordenamiento").max;
@@ -114,7 +114,7 @@ export default class Visualizador extends React.Component{
         const algoritmo = document.getElementById('seleccion_algoritmo_ordenamiento').value;
         switch(algoritmo){
             case 'burbuja':
-                this.mostrar_animaciones(burbuja(this.state.arreglo), "blue", "red", "green");
+                this.mostrar_animaciones(burbuja(this.state.arreglo));
                 break;
         }
     }
