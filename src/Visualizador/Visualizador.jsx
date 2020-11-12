@@ -23,6 +23,7 @@ export default class Visualizador extends React.Component{
                     document.getElementById("boton_arreglo_aleatorio").disabled = false;
                     document.getElementById("rango_elementos").disabled = false;
                     document.getElementById('boton_iniciar_ordenamiento').disabled = false;
+                    document.getElementById('seleccion_algoritmo_ordenamiento').disabled = false;
                     this.state.timers = [];
                 }
             }, i * 10))
