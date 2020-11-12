@@ -18,8 +18,8 @@
 	<noscript>You need to enable JavaScript to run this app.</noscript>
 
 	<body class="container-fluid bg-dark text-white">
-		<section class="d-flex container-fluid  justify-content-between pt-3">
-			<div>
+		<section class="d-flex container-fluid  justify-content-between pt-3 ">
+			<div class="flex-grow-1">
 				Algoritmo de ordenamiento:
 				<select class = "bg-dark text-white" id = "seleccion_algoritmo_ordenamiento">
 					<option value = "burbuja">
@@ -27,12 +27,12 @@
 					</option>
 				</select>
 			</div>
-			<div>
+			<div class="flex-grow-1">
 				Elementos:
 				<input type = "text" value = "125" readonly id = "texto_elementos" size = "1"
-				class="bg-dark text-white text-center">
-				<input type="range" min="10" max="250" value="125"
-				id = "rango_elementos">
+				class="bg-dark text-white text-center ">
+				<input type="range" min="5" max="500" value="125"
+				id = "rango_elementos" class="w-50">
 			</div>
 			<div>
 				<button class="btn btn-info" id = "boton_arreglo_aleatorio">
@@ -48,11 +48,12 @@
 		<section class="container-fluid fixed-bottom pb-3">
 			<hr class="bg-white">
 			<section class="d-flex container-fluid justify-content-between">
-				<div>
-					velocidad:
-					<input type="range" min="1" max="1000" value="500" id = "velocidad_ordenamiento" >
+				<div class="flex-grow-1">
+					velocidad: 
+					<input type="range" min="1" max="1000" value="500" id = "velocidad_ordenamiento"
+					class="w-50">
 				</div>
-				<div>
+				<div class="flex-grow-1">
 					<button class="btn btn-info text-white" id = "boton_iniciar_ordenamiento">
 						Iniciar ordenamiento
 					</button>
