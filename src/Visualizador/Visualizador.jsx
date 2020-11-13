@@ -2,6 +2,7 @@ import React from 'react';
 import "./Visualizador.css";
 import {burbuja} from '../Algoritmos/burbuja.js'
 import {seleccion} from '../Algoritmos/seleccion.js'
+import {insercion} from '../Algoritmos/insercion.js'
 
 export default class Visualizador extends React.Component{
     constructor(props){
@@ -121,6 +122,9 @@ export default class Visualizador extends React.Component{
             case 'seleccion':
                 this.mostrar_animaciones(seleccion(this.state.arreglo));
                 break
+            case 'insecion':
+                this.mostrar_animaciones(insercion(this.state.arreglo));
+                break;
         }
     }
 
