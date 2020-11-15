@@ -3,6 +3,7 @@ import "./Visualizador.css";
 import {burbuja} from '../Algoritmos/burbuja.js'
 import {seleccion} from '../Algoritmos/seleccion.js'
 import {insercion} from '../Algoritmos/insercion.js'
+import {merge} from '../Algoritmos/merge.js'
 
 export default class Visualizador extends React.Component{
     constructor(props){
@@ -48,10 +49,7 @@ export default class Visualizador extends React.Component{
 
                     this.state.arreglo[animaciones[i].p1] = animaciones[i].vp1;
                     this.state.arreglo[animaciones[i].p2] = animaciones[i].vp2;
-                    if(i == animaciones.length - 1){
-                        console.log(this.state.arreglo)
-                        this.ordenamiento_finalizado();
-                    }
+                    if(i == animaciones.length - 1) this.ordenamiento_finalizado();
                 }, velocidad_ordenamiento / 2);
             }, i * velocidad_ordenamiento));
         }
@@ -124,6 +122,9 @@ export default class Visualizador extends React.Component{
                 break
             case 'insecion':
                 this.mostrar_animaciones(insercion(this.state.arreglo));
+                break;
+            case 'merge':
+                this.mostrar_animaciones(merge(this.state.arreglo));
                 break;
         }
     }
