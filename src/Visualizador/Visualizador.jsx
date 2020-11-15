@@ -4,6 +4,7 @@ import {burbuja} from '../Algoritmos/burbuja.js'
 import {seleccion} from '../Algoritmos/seleccion.js'
 import {insercion} from '../Algoritmos/insercion.js'
 import {merge} from '../Algoritmos/merge.js'
+import {quick} from '../Algoritmos/quick.js'
 
 export default class Visualizador extends React.Component{
     constructor(props){
@@ -125,6 +126,9 @@ export default class Visualizador extends React.Component{
                 break;
             case 'merge':
                 this.mostrar_animaciones(merge(this.state.arreglo));
+                break;
+            case 'quick':
+                this.mostrar_animaciones(quick(this.state.arreglo));
                 break;
         }
     }
