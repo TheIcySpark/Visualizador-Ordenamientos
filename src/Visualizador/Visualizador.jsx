@@ -156,7 +156,7 @@ export default class Visualizador extends React.Component{
         this.setState({arreglo});
         const tam = document.getElementById('rango_elementos').value;
         for(let i = 1; i <= tam; i++){
-            arreglo.push(enteroAleatorio(1,500));
+            arreglo.push(enteroAleatorio(1,542));
         }
         this.setState({arreglo});
     }
